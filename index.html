@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>复利计算器 - 简洁高效的在线理财工具</title>
+    <meta name="description" content="在线复利计算器，支持多种复利频率，快速计算投资收益">
+    <meta name="keywords" content="复利计算器,投资计算,理财工具,在线计算">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>复利计算器</h1>
+        
+        <div class="mode-selector">
+            <div class="mode-option">
+                <input type="radio" id="mode-normal" name="calculation-mode" value="normal" checked>
+                <label for="mode-normal">正向计算</label>
+            </div>
+            <div class="mode-option">
+                <input type="radio" id="mode-target" name="calculation-mode" value="target">
+                <label for="mode-target">目标金额</label>
+            </div>
+        </div>
+
+        <div class="calculator" id="normal-mode">
+            <div class="input-row">
+                <label for="principal" class="input-label">本金 (元)</label>
+                <div class="input-with-hint">
+                    <input type="number" id="principal" placeholder="例如: 10000" min="0" step="0.01" required>
+                    <span class="input-hint">初始投资金额</span>
+                </div>
+                <div class="input-error" id="principal-error"></div>
+            </div>
+            
+            <div class="input-row">
+                <label for="rate" class="input-label">年利率 (%)</label>
+                <div class="input-with-hint">
+                    <input type="number" id="rate" placeholder="例如: 5" min="0" step="0.01" required>
+                    <span class="input-hint">预期年化收益率</span>
+                </div>
+                <div class="input-error" id="rate-error"></div>
+            </div>
+            
+            <div class="input-row">
+                <label for="time" class="input-label">投资年限</label>
+                <div class="input-with-hint">
+                    <input type="number" id="time" placeholder="例如: 10" min="0" step="1" required>
+                    <span class="input-hint">投资期限（年）</span>
+                </div>
+                <div class="input-error" id="time-error"></div>
+            </div>
+            
+            <div class="input-row">
+                <label for="compound" class="input-label">复利频率</label>
+                <div class="input-with-hint">
+                    <select id="compound" required>
+                        <option value="1">每年一次</option>
+                        <option value="2">每半年一次</option>
+                        <option value="4">每季度一次</option>
+                        <option value="12">每月一次</option>
+                        <option value="365">每日一次</option>
+                    </select>
+                    <span class="input-hint">利息计算频率</span>
+                </div>
+            </div>
+            
+            <div class="button-group">
+                <button onclick="calculate()" class="calculate-btn" id="calculate-btn">
+                    <span class="btn-icon">📊</span>
+                    计算复利
+                </button>
+                <button onclick="clearAll()" class="clear-btn" id="clear-btn">
+                    <span class="btn-icon">🗑️</span>
+                    清空
+                </button>
+            </div>
+        </div>
+
+        <div class="calculator" id="target-mode" style="display: none;">
+            <div class="input-row">
+                <label for="targetAmount" class="input-label">目标金额 (元)</label>
+                <div class="input-with-hint">
+                    <input type="number" id="targetAmount" placeholder="例如: 50000" min="0" step="0.01">
+                    <span class="input-hint">您希望达到的最终金额</span>
+                </div>
+                <div class="input-error" id="target-amount-error"></div>
+            </div>
+            
+            <div class="input-row">
+                <label for="targetRate" class="input-label">年利率 (%)</label>
+                <div class="input-with-hint">
+                    <input type="number" id="targetRate" placeholder="例如: 5" min="0" step="0.01">
+                    <span class="input-hint">预期年化收益率</span>
+                </div>
+                <div class="input-error" id="target-rate-error"></div>
+            </div>
+            
+            <div class="input-row">
+                <label for="targetTime" class="input-label">投资年限</label>
+                <div class="input-with-hint">
+                    <input type="number" id="targetTime" placeholder="例如: 10" min="0" step="1">
+                    <span class="input-hint">计划投资期限（年）</span>
+                </div>
+                <div class="input-error" id="target-time-error"></div>
+            </div>
+            
+            <div class="input-row">
+                <label for="targetCompound" class="input-label">复利频率</label>
+                <div class="input-with-hint">
+                    <select id="targetCompound">
+                        <option value="1">每年一次</option>
+                        <option value="2">每半年一次</option>
+                        <option value="4">每季度一次</option>
+                        <option value="12">每月一次</option>
+                        <option value="365">每日一次</option>
+                    </select>
+                    <span class="input-hint">利息计算频率</span>
+                </div>
+            </div>
+            
+            <div class="button-group">
+                <button onclick="calculateTarget()" class="calculate-btn" id="calculate-target-btn">
+                    <span class="btn-icon">🎯</span>
+                    计算所需本金
+                </button>
+                <button onclick="clearAll()" class="clear-btn" id="clear-btn">
+                    <span class="btn-icon">🗑️</span>
+                    清空
+                </button>
+            </div>
+        </div>
+        
+        <div class="results" id="results" style="display: none;">
+            <h2 id="result-title">📊 计算结果：<span id="finalAmount">¥0.00</span></h2>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+    
+    <!-- 添加统计代码占位符 -->
+    <script>
+        // 页面加载统计
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('复利计算器已加载');
+        });
+    </script>
+</body>
+</html>
