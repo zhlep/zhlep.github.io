@@ -275,6 +275,42 @@ document.addEventListener('DOMContentLoaded', function() {
     clearErrors();
 });
 
+// 加减按钮功能
+function adjustValue(inputId, step) {
+    const input = document.getElementById(inputId);
+    if (!input) return;
+    
+    let currentValue = parseFloat(input.value) || 0;
+    let newValue;
+    
+    if (inputId === 'rate' || inputId === 'targetRate') {
+        // 年利率：以1为倍数调整
+        newValue = currentValue + step;
+        if (newValue < 0) newValue = 0;
+        input.value = newValue.toFixed(2);
+    } else if (inputId === 'time' || inputId === 'targetTime') {
+        // 投资年限：以1为倍数调整，必须是整数
+        newValue = Math.max(0, Math.floor(currentValue) + step);
+        input.value = newValue;
+    } else if (inputId === 'principal' || inputId === 'targetAmount') {
+        // 金额：以1000为倍数调整
+        newValue = Math.max(0, currentValue + (step * 1000));
+        input.value = newValue;
+    }
+    
+    // 触发输入事件，更新验证状态
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    
+    // 如果在输入模式下，自动计算
+    if (document.getElementById('normal-mode').style.display !== 'none' && 
+        (inputId === 'rate' || inputId === 'time')) {
+        calculate();
+    } else if (document.getElementById('target-mode').style.display !== 'none' && 
+               (inputId === 'targetRate' || inputId === 'targetTime')) {
+        calculateTarget();
+    }
+}
+
 // 切换计算模式
 function switchMode(mode) {
     const normalMode = document.getElementById('normal-mode');
