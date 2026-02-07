@@ -110,8 +110,8 @@
         }
         
         .input-label {
-            font-size: 14px;
-            color: #666;
+            font-size: 18px;
+            color: #333;
             font-weight: 600;
             text-align: left;
             padding-right: 8px;
@@ -130,6 +130,61 @@
             font-weight: 500;
             width: 100%;
             outline: none;
+        }
+        
+        /* 加减按钮样式 */
+        .input-group {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .stepper-buttons {
+            display: flex;
+            flex-direction: row;
+            gap: 4px;
+            z-index: 10;
+        }
+        
+        .stepper-btn {
+            width: 32px;
+            height: 32px;
+            border: 1px solid #ddd;
+            background-color: #f8f9fa;
+            color: #333;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            min-width: 32px;
+            min-height: 32px;
+        }
+        
+        .stepper-btn:hover {
+            background-color: #e9ecef;
+            border-color: #007bff;
+            color: #007bff;
+            transform: scale(1.05);
+        }
+        
+        .stepper-btn:active {
+            background-color: #007bff;
+            color: white;
+            border-color: #007bff;
+            transform: scale(0.95);
+        }
+        
+        /* 输入框样式调整 */
+        input[type="number"] {
+            padding: 10px 8px;
+            flex: 1;
+            min-height: 40px;
         }
         
         input[type="number"]:focus, select:focus {
@@ -223,12 +278,29 @@
             }
             
             .input-label {
-                font-size: 14px;
+                font-size: 18px;
             }
             
             input[type="number"], select {
                 font-size: 16px;
-                padding: 12px;
+                padding: 12px 40px 12px 12px;
+                min-height: 48px;
+            }
+            
+            .stepper-buttons {
+                gap: 6px;
+            }
+            
+            .stepper-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 18px;
+                min-width: 36px;
+                min-height: 36px;
+            }
+            
+            input[type="number"] {
+                padding: 12px 8px;
                 min-height: 48px;
             }
             
@@ -265,12 +337,29 @@
             }
             
             .input-label {
-                font-size: 14px;
+                font-size: 18px;
             }
             
             input[type="number"], select {
                 font-size: 16px;
-                padding: 12px 14px;
+                padding: 12px 40px 12px 12px;
+                min-height: 50px;
+            }
+            
+            .stepper-buttons {
+                gap: 6px;
+            }
+            
+            .stepper-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 18px;
+                min-width: 36px;
+                min-height: 36px;
+            }
+            
+            input[type="number"] {
+                padding: 12px 8px;
                 min-height: 50px;
             }
             
@@ -308,7 +397,13 @@
             <div class="input-row">
                 <label for="rate" class="input-label">年利率 (%)</label>
                 <div class="input-with-hint">
-                    <input type="number" id="rate" placeholder="例如: 5" min="0" step="0.01" required>
+                    <div class="input-group">
+                        <input type="number" id="rate" value="1" min="0" step="0.01" required>
+                        <div class="stepper-buttons">
+                            <button type="button" class="stepper-btn" onclick="adjustValue('rate', -1)">−</button>
+                            <button type="button" class="stepper-btn" onclick="adjustValue('rate', 1)">+</button>
+                        </div>
+                    </div>
                 </div>
                 <div class="input-error" id="rate-error"></div>
             </div>
@@ -316,7 +411,13 @@
             <div class="input-row">
                 <label for="time" class="input-label">投资年限</label>
                 <div class="input-with-hint">
-                    <input type="number" id="time" placeholder="例如: 10" min="0" step="1" required>
+                    <div class="input-group">
+                        <input type="number" id="time" value="1" min="0" step="1" required>
+                        <div class="stepper-buttons">
+                            <button type="button" class="stepper-btn" onclick="adjustValue('time', -1)">−</button>
+                            <button type="button" class="stepper-btn" onclick="adjustValue('time', 1)">+</button>
+                        </div>
+                    </div>
                 </div>
                 <div class="input-error" id="time-error"></div>
             </div>
@@ -358,7 +459,13 @@
             <div class="input-row">
                 <label for="targetRate" class="input-label">年利率 (%)</label>
                 <div class="input-with-hint">
-                    <input type="number" id="targetRate" placeholder="例如: 5" min="0" step="0.01">
+                    <div class="input-group">
+                        <input type="number" id="targetRate" value="1" min="0" step="0.01">
+                        <div class="stepper-buttons">
+                            <button type="button" class="stepper-btn" onclick="adjustValue('targetRate', -1)">−</button>
+                            <button type="button" class="stepper-btn" onclick="adjustValue('targetRate', 1)">+</button>
+                        </div>
+                    </div>
                 </div>
                 <div class="input-error" id="target-rate-error"></div>
             </div>
@@ -366,7 +473,13 @@
             <div class="input-row">
                 <label for="targetTime" class="input-label">投资年限</label>
                 <div class="input-with-hint">
-                    <input type="number" id="targetTime" placeholder="例如: 10" min="0" step="1">
+                    <div class="input-group">
+                        <input type="number" id="targetTime" value="1" min="0" step="1">
+                        <div class="stepper-buttons">
+                            <button type="button" class="stepper-btn" onclick="adjustValue('targetTime', -1)">−</button>
+                            <button type="button" class="stepper-btn" onclick="adjustValue('targetTime', 1)">+</button>
+                        </div>
+                    </div>
                 </div>
                 <div class="input-error" id="target-time-error"></div>
             </div>
