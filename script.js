@@ -292,9 +292,13 @@ function adjustValue(inputId, step) {
         // 投资年限：以1为倍数调整，必须是整数
         newValue = Math.max(0, Math.floor(currentValue) + step);
         input.value = newValue;
-    } else if (inputId === 'principal' || inputId === 'targetAmount') {
-        // 金额：以1000为倍数调整
-        newValue = Math.max(0, currentValue + (step * 1000));
+    } else if (inputId === 'principal') {
+        // 本金：以10000为倍数调整
+        newValue = Math.max(0, currentValue + (step * 10000));
+        input.value = newValue;
+    } else if (inputId === 'targetAmount') {
+        // 目标金额：以100000为倍数调整
+        newValue = Math.max(0, currentValue + (step * 100000));
         input.value = newValue;
     }
     
@@ -310,6 +314,33 @@ function adjustValue(inputId, step) {
         calculateTarget();
     }
 }
+
+// 为加减按钮添加触摸事件支持
+document.addEventListener('DOMContentLoaded', function() {
+    const stepperButtons = document.querySelectorAll('.stepper-btn');
+    stepperButtons.forEach(button => {
+        // 添加触摸开始事件，防止双击缩放
+        button.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+        }, { passive: false });
+        
+        // 添加触摸结束事件
+        button.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            // 获取按钮的onclick属性中的函数调用
+            const onclickAttr = this.getAttribute('onclick');
+            if (onclickAttr) {
+                // 解析onclick属性，提取函数名和参数
+                const match = onclickAttr.match(/adjustValue\('([^']+)'\s*,\s*(-?\d+)\)/);
+                if (match) {
+                    const inputId = match[1];
+                    const step = parseInt(match[2]);
+                    adjustValue(inputId, step);
+                }
+            }
+        }, { passive: false });
+    });
+});
 
 // 切换计算模式
 function switchMode(mode) {
