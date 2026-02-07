@@ -444,10 +444,10 @@
                     <span class="btn-icon">📊</span>
                     计算复利
                 </button>
-                <button onclick="clearAll()" class="clear-btn" id="clear-btn">
-                    <span class="btn-icon">🗑️</span>
-                    清空
-                </button>
+            </div>
+            
+            <div class="results" id="results" style="display: none;">
+                <h2 id="result-title">📊 计算结果：<span id="finalAmount">¥0.00</span></h2>
             </div>
         </div>
 
@@ -512,16 +512,13 @@
                     <span class="btn-icon">🎯</span>
                     计算所需本金
                 </button>
-                <button onclick="clearAll()" class="clear-btn" id="clear-btn">
-                    <span class="btn-icon">🗑️</span>
-                    清空
-                </button>
+            </div>
+            
+            <div class="results" id="results" style="display: none;">
+                <h2 id="result-title">🎯 目标金额计算结果：<span id="requiredPrincipal">¥0.00</span></h2>
             </div>
         </div>
         
-        <div class="results" id="results" style="display: none;">
-            <h2 id="result-title">📊 计算结果：<span id="finalAmount">¥0.00</span></h2>
-        </div>
     </div>
     
     <script src="script.js"></script>
