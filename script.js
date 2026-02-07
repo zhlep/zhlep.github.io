@@ -185,36 +185,6 @@ function clearErrors() {
     });
 }
 
-// 清空所有输入和结果
-function clearAll() {
-    // 清空输入
-    document.getElementById('principal').value = '';
-    document.getElementById('rate').value = '';
-    document.getElementById('time').value = '';
-    document.getElementById('compound').selectedIndex = 0;
-    
-    // 清除错误信息
-    clearErrors();
-    
-    // 隐藏结果
-    document.getElementById('results').style.display = 'none';
-    document.getElementById('summary').style.display = 'none';
-    
-    // 重置结果值
-    document.getElementById('finalAmount').textContent = '¥0.00';
-    document.getElementById('interestEarned').textContent = '¥0.00';
-    document.getElementById('roi').textContent = '0.00%';
-    
-    // 添加清空动画
-    const btn = document.getElementById('clear-btn');
-    btn.style.transform = 'scale(0.95)';
-    setTimeout(() => {
-        btn.style.transform = 'scale(1)';
-    }, 150);
-    
-    // 聚焦到第一个输入框
-    document.getElementById('principal').focus();
-}
 
 // 添加页面加载完成后的初始化
 document.addEventListener('DOMContentLoaded', function() {
@@ -514,53 +484,3 @@ function validateTargetInput(id, value) {
     }
 }
 
-// 清空所有输入和结果（增强版）
-function clearAll() {
-    const currentMode = getCurrentMode();
-    
-    if (currentMode === 'normal') {
-        // 清空正向计算模式的输入
-        document.getElementById('principal').value = '';
-        document.getElementById('rate').value = '';
-        document.getElementById('time').value = '';
-        document.getElementById('compound').selectedIndex = 0;
-    } else {
-        // 清空目标计算模式的输入
-        document.getElementById('targetAmount').value = '';
-        document.getElementById('targetRate').value = '';
-        document.getElementById('targetTime').value = '';
-        document.getElementById('targetCompound').selectedIndex = 0;
-    }
-    
-    // 清除错误信息
-    clearErrors();
-    
-    // 隐藏结果
-    document.getElementById('results').style.display = 'none';
-    
-    // 重置结果值
-    document.getElementById('finalAmount').textContent = '¥0.00';
-    document.getElementById('interestEarned').textContent = '¥0.00';
-    document.getElementById('roi').textContent = '0.00%';
-    document.getElementById('requiredPrincipal').textContent = '¥0.00';
-    document.getElementById('targetFinalAmount').textContent = '¥0.00';
-    document.getElementById('targetInterestEarned').textContent = '¥0.00';
-    
-    // 隐藏所有结果区域
-    document.getElementById('normal-results').style.display = 'none';
-    document.getElementById('target-results').style.display = 'none';
-    
-    // 添加清空动画
-    const btn = document.getElementById('clear-btn');
-    btn.style.transform = 'scale(0.95)';
-    setTimeout(() => {
-        btn.style.transform = 'scale(1)';
-    }, 150);
-    
-    // 聚焦到当前模式的第一个输入框
-    if (currentMode === 'normal') {
-        document.getElementById('principal').focus();
-    } else {
-        document.getElementById('targetAmount').focus();
-    }
-}
