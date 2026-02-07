@@ -28,6 +28,7 @@ body {
     padding: 20px;
     line-height: 1.6;
     transition: none; /* 移除页面加载动画 */
+    overflow-y: auto; /* 防止输入时屏幕跳动 */
 }
 
 body {
@@ -38,6 +39,7 @@ body {
     min-height: 100vh;
     padding: 20px;
     transition: none; /* 移除页面加载动画 */
+    overflow-y: auto; /* 防止输入时屏幕跳动 */
 }
 
 .container {
@@ -151,6 +153,10 @@ input[type="number"], select {
     background-color: #fff;
     font-weight: 500;
     width: 100%;
+    -webkit-appearance: none; /* 移除iOS默认样式 */
+    -moz-appearance: none;
+    appearance: none;
+    min-height: 44px; /* iOS推荐的最小触摸目标尺寸 */
 }
 
 input[type="number"]:focus, select:focus {
@@ -361,156 +367,272 @@ input[type="number"]:focus, select:focus {
     body {
         align-items: flex-start;
         padding: 10px;
+        overflow-y: auto; /* 防止输入时屏幕跳动 */
     }
     
     .container {
-        padding: 10px;
+        padding: 15px;
         margin: 0 5px;
+        max-width: 100%;
     }
     
     h1 {
-        font-size: 18px;
-        margin-bottom: 12px;
+        font-size: 20px;
+        margin-bottom: 15px;
+        text-align: center;
     }
     
     .mode-selector {
         flex-direction: row;
-        gap: 20px;
-        margin-bottom: 20px;
+        gap: 15px;
+        margin-bottom: 15px;
+        padding: 10px;
+        background: #f8f9fa;
+        border-radius: 10px;
+        border: 1px solid #e9ecef;
+    }
+    
+    .mode-option {
+        padding: 6px 12px;
+        border-radius: 6px;
+        background: white;
+        border: 1px solid #e9ecef;
+    }
+    
+    .mode-option label {
+        font-size: 13px;
+        font-weight: 600;
     }
     
     .input-row {
         grid-template-columns: 90px 1fr;
-        gap: 4px;
-        margin-bottom: 4px;
+        gap: 8px;
+        margin-bottom: 8px;
     }
     
     .input-label {
-        font-size: 13px;
+        font-size: 14px;
         text-align: left;
         padding-right: 0;
+        font-weight: 600;
+        color: #333;
     }
     
-    input[type="number"], select {
-        padding: 8px 10px;
-        font-size: 14px;
-    }
-    
+input[type="number"], select {
+    padding: 10px 12px;
+    font-size: 16px;
+    -webkit-appearance: none; /* 移除iOS默认样式 */
+    -moz-appearance: none;
+    appearance: none;
+    min-height: 48px; /* 增大触摸目标尺寸 */
+    border-radius: 8px;
+    border: 2px solid #e9ecef;
+    background: white;
+}
+
     .input-hint {
-        font-size: 11px;
+        font-size: 12px;
         display: none;
     }
     
     .input-error {
-        font-size: 9px;
+        font-size: 11px;
         margin-left: 96px; /* 调整对齐 */
+        color: #dc3545;
     }
     
     .button-group {
         flex-direction: row;
-        gap: 8px;
+        gap: 10px;
+        margin-top: 10px;
     }
     
     .calculate-btn, .clear-btn {
-        font-size: 14px;
-        padding: 8px;
+        font-size: 16px;
+        padding: 12px;
+        border-radius: 8px;
+        font-weight: 700;
+    }
+    
+    .calculate-btn {
+        background-color: #007bff;
+        box-shadow: 0 3px 10px rgba(0, 123, 255, 0.3);
+    }
+    
+    .clear-btn {
+        background-color: #6c757d;
+        color: white;
+        border: 2px solid #6c757d;
     }
     
     /* 手机端结果行更紧凑 */
     .result-row {
         grid-template-columns: 100px 1fr;
-        gap: 6px;
-        padding: 4px;
+        gap: 8px;
+        padding: 8px;
+        border-radius: 8px;
+        border: 1px solid #e9ecef;
     }
     
     .result-value {
-        font-size: 14px;
+        font-size: 16px;
+        font-weight: 700;
     }
     
     .result-label {
-        font-size: 8px;
+        font-size: 12px;
         text-align: left;
         padding-right: 0;
+        font-weight: 600;
     }
     
     /* 手机端结果标题字体 */
     .results h2 {
-        font-size: 16px;
+        font-size: 18px;
+        margin-bottom: 6px;
     }
     
     .results h2 span {
-        font-size: 20px;
+        font-size: 22px;
+    }
+    
+    /* 确保计算器内容居中显示 */
+    .calculator {
+        width: 100%;
+        max-width: 100%;
     }
 }
 
 @media (max-width: 480px) {
     body {
-        padding: 6px;
+        padding: 10px;
+        overflow-y: auto; /* 防止输入时屏幕跳动 */
     }
     
     .container {
-        padding: 8px;
-        margin: 0 3px;
+        padding: 12px;
+        margin: 0 5px;
+        max-width: 100%;
+        border-radius: 12px;
     }
     
     h1 {
-        font-size: 18px;
-        margin-bottom: 8px;
+        font-size: 20px;
+        margin-bottom: 12px;
+        text-align: center;
+    }
+    
+    .mode-selector {
+        flex-direction: row;
+        gap: 12px;
+        margin-bottom: 12px;
+        padding: 8px;
+        background: #f8f9fa;
+        border-radius: 8px;
+        border: 1px solid #e9ecef;
+    }
+    
+    .mode-option {
+        padding: 5px 10px;
+        border-radius: 6px;
+        background: white;
+        border: 1px solid #e9ecef;
+    }
+    
+    .mode-option label {
+        font-size: 12px;
+        font-weight: 600;
     }
     
     .input-row {
         grid-template-columns: 85px 1fr;
-        gap: 3px;
-        margin-bottom: 3px;
+        gap: 10px;
+        margin-bottom: 10px;
     }
     
     .input-label {
-        font-size: 13px;
+        font-size: 14px;
+        text-align: left;
+        padding-right: 0;
+        font-weight: 600;
+        color: #333;
     }
     
-    input[type="number"], select {
-        font-size: 14px; /* 防止iOS缩放 */
-        padding: 6px 8px;
+input[type="number"], select {
+        font-size: 16px; /* 防止iOS缩放 */
+        padding: 12px 14px;
+        -webkit-appearance: none; /* 移除iOS默认样式 */
+        -moz-appearance: none;
+        appearance: none;
+        min-height: 50px; /* 增大触摸目标尺寸 */
+        border-radius: 8px;
+        border: 2px solid #e9ecef;
+        background: white;
     }
-    
+
     .input-hint {
-        font-size: 11px;
+        font-size: 12px;
         display: none;
     }
     
     .input-error {
-        font-size: 9px;
+        font-size: 12px;
         margin-left: 91px; /* 调整对齐 */
+        color: #dc3545;
     }
     
     .result-row {
         grid-template-columns: 80px 1fr;
-        gap: 4px;
-        padding: 3px;
+        gap: 8px;
+        padding: 8px;
+        border-radius: 8px;
+        border: 1px solid #e9ecef;
     }
     
     .result-value {
-        font-size: 14px;
+        font-size: 16px;
+        font-weight: 700;
     }
     
     .result-label {
-        font-size: 7px;
+        font-size: 12px;
         text-align: left;
         padding-right: 0;
+        font-weight: 600;
     }
     
     .calculate-btn, .clear-btn {
-        padding: 6px;
-        font-size: 13px;
+        padding: 12px;
+        font-size: 16px;
+        border-radius: 8px;
+        font-weight: 700;
+    }
+    
+    .calculate-btn {
+        background-color: #007bff;
+        box-shadow: 0 3px 10px rgba(0, 123, 255, 0.3);
+    }
+    
+    .clear-btn {
+        background-color: #6c757d;
+        color: white;
+        border: 2px solid #6c757d;
     }
     
     /* 480px以下结果标题字体 */
     .results h2 {
-        font-size: 14px;
+        font-size: 18px;
+        margin-bottom: 6px;
     }
     
     .results h2 span {
-        font-size: 18px;
+        font-size: 22px;
+    }
+    
+    /* 确保计算器内容居中显示 */
+    .calculator {
+        width: 100%;
+        max-width: 100%;
     }
 }
 
