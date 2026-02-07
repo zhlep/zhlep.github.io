@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
     <title>复利计算器 - 简洁高效的在线理财工具</title>
     <meta name="description" content="在线复利计算器，支持多种复利频率，快速计算投资收益">
     <meta name="keywords" content="复利计算器,投资计算,理财工具,在线计算">
@@ -170,14 +170,12 @@
             background-color: #e9ecef;
             border-color: #007bff;
             color: #007bff;
-            transform: scale(1.05);
         }
         
         .stepper-btn:active {
             background-color: #007bff;
             color: white;
             border-color: #007bff;
-            transform: scale(0.95);
         }
         
         /* 输入框样式调整 */
@@ -389,7 +387,13 @@
             <div class="input-row">
                 <label for="principal" class="input-label">本金 (元)</label>
                 <div class="input-with-hint">
-                    <input type="number" id="principal" placeholder="例如: 10000" min="0" step="0.01" required>
+                    <div class="input-group">
+                        <input type="number" id="principal" value="10000" min="0" step="0.01" required>
+                        <div class="stepper-buttons">
+                            <button type="button" class="stepper-btn" onclick="adjustValue('principal', -1)">−</button>
+                            <button type="button" class="stepper-btn" onclick="adjustValue('principal', 1)">+</button>
+                        </div>
+                    </div>
                 </div>
                 <div class="input-error" id="principal-error"></div>
             </div>
@@ -451,7 +455,13 @@
             <div class="input-row">
                 <label for="targetAmount" class="input-label">目标金额 (元)</label>
                 <div class="input-with-hint">
-                    <input type="number" id="targetAmount" placeholder="例如: 50000" min="0" step="0.01">
+                    <div class="input-group">
+                        <input type="number" id="targetAmount" value="100000" min="0" step="0.01">
+                        <div class="stepper-buttons">
+                            <button type="button" class="stepper-btn" onclick="adjustValue('targetAmount', -1)">−</button>
+                            <button type="button" class="stepper-btn" onclick="adjustValue('targetAmount', 1)">+</button>
+                        </div>
+                    </div>
                 </div>
                 <div class="input-error" id="target-amount-error"></div>
             </div>
