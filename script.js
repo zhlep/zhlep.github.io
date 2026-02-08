@@ -47,9 +47,9 @@ function calculate() {
     const simpleInterest = principal * rateDecimal * time;
     const compoundEffect = ((interestEarned - simpleInterest) / simpleInterest) * 100;
     
-    // 显示结果
+// 显示结果
     document.getElementById('normal-results').style.display = 'block';
-    document.getElementById('normal-result-title').innerHTML = '📊 正向计算结果：<span id="finalAmount">' + formatCurrency(finalAmount) + '</span>';
+    document.getElementById('normal-result-title').innerHTML = '<span id="finalAmount">' + formatCurrency(finalAmount) + '</span>';
     document.getElementById('target-results').style.display = 'none';
     
     document.getElementById('finalAmount').textContent = formatCurrency(finalAmount);
@@ -394,7 +394,7 @@ function calculateTarget() {
     const requiredPrincipal = targetAmount / Math.pow(1 + rateDecimal / compound, compound * time);
     const interestEarned = targetAmount - requiredPrincipal;
     
-    // 显示结果
+// 显示结果
     const resultsDiv = document.getElementById('target-results');
     const resultTitle = document.getElementById('target-result-title');
     const requiredPrincipalSpan = document.getElementById('requiredPrincipal');
@@ -403,7 +403,7 @@ function calculateTarget() {
         resultsDiv.style.display = 'block';
     }
     if (resultTitle) {
-        resultTitle.innerHTML = '🎯 目标金额计算结果：<span id="requiredPrincipal">' + formatCurrency(requiredPrincipal) + '</span>';
+        resultTitle.innerHTML = '<span id="requiredPrincipal">' + formatCurrency(requiredPrincipal) + '</span>';
     }
     if (requiredPrincipalSpan) {
         requiredPrincipalSpan.textContent = formatCurrency(requiredPrincipal);
