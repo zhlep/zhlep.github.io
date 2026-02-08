@@ -48,33 +48,14 @@ function calculate() {
     const compoundEffect = ((interestEarned - simpleInterest) / simpleInterest) * 100;
     
     // 显示结果
-    document.getElementById('results').style.display = 'block';
-    document.getElementById('result-title').innerHTML = '📊 正向计算结果：<span id="finalAmount">' + formatCurrency(finalAmount) + '</span>';
     document.getElementById('normal-results').style.display = 'block';
+    document.getElementById('normal-result-title').innerHTML = '📊 正向计算结果：<span id="finalAmount">' + formatCurrency(finalAmount) + '</span>';
     document.getElementById('target-results').style.display = 'none';
     
     document.getElementById('finalAmount').textContent = formatCurrency(finalAmount);
     
-    // 显示详细分析
-    document.getElementById('summary').style.display = 'block';
-    document.getElementById('summary-principal').textContent = formatCurrency(principal);
-    document.getElementById('summary-interest').textContent = formatCurrency(interestEarned);
-    document.getElementById('summary-effect').textContent = 
-        isFinite(compoundEffect) && compoundEffect > 0 ? compoundEffect.toFixed(2) + '%' : 'N/A';
-    
     // 滚动到结果区域
-    document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
-    
-    // 添加成功动画
-    const resultCards = document.querySelectorAll('.result-card');
-    resultCards.forEach((card, index) => {
-        setTimeout(() => {
-            card.style.transform = 'scale(1.02)';
-            setTimeout(() => {
-                card.style.transform = 'scale(1)';
-            }, 200);
-        }, index * 100);
-    });
+    document.getElementById('normal-results').scrollIntoView({ behavior: 'smooth' });
 }
 
 function formatCurrency(amount) {
@@ -188,13 +169,23 @@ function clearErrors() {
 
 // 添加页面加载完成后的初始化
 document.addEventListener('DOMContentLoaded', function() {
-    // 添加页面加载动画
-    document.body.style.opacity = '0';
-    document.body.style.transition = 'opacity 0.5s ease-in-out';
+    // 移除页面加载动画，避免手机上的闪烁
+    document.body.style.opacity = '1';
     
-    setTimeout(() => {
-        document.body.style.opacity = '1';
-    }, 100);
+    // 防止双击缩放
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', function (event) {
+        const now = (new Date()).getTime();
+        if (now - lastTouchEnd <= 300) {
+            event.preventDefault();
+        }
+        lastTouchEnd = now;
+    }, false);
+    
+    // 防止多点触控缩放
+    document.addEventListener('gesturestart', function (event) {
+        event.preventDefault();
+    });
     
     // 添加模式切换事件监听
     const modeRadios = document.querySelectorAll('input[name="calculation-mode"]');
@@ -316,18 +307,21 @@ document.addEventListener('DOMContentLoaded', function() {
 function switchMode(mode) {
     const normalMode = document.getElementById('normal-mode');
     const targetMode = document.getElementById('target-mode');
-    const results = document.getElementById('results');
+    const normalResults = document.getElementById('normal-results');
+    const targetResults = document.getElementById('target-results');
     
     if (mode === 'normal') {
         normalMode.style.display = 'flex';
         targetMode.style.display = 'none';
-        results.style.display = 'none';
+        normalResults.style.display = 'none';
+        targetResults.style.display = 'none';
         clearErrors();
         clearResults();
     } else {
         normalMode.style.display = 'none';
         targetMode.style.display = 'flex';
-        results.style.display = 'none';
+        normalResults.style.display = 'none';
+        targetResults.style.display = 'none';
         clearErrors();
         clearResults();
     }
@@ -341,18 +335,18 @@ function getCurrentMode() {
 // 清空结果
 function clearResults() {
     // 清空正向计算结果
-    document.getElementById('finalAmount').textContent = '¥0.00';
-    document.getElementById('interestEarned').textContent = '¥0.00';
-    document.getElementById('roi').textContent = '0.00%';
+    const finalAmountEl = document.getElementById('finalAmount');
+    if (finalAmountEl) finalAmountEl.textContent = '¥0.00';
     
     // 清空目标计算结果
-    document.getElementById('requiredPrincipal').textContent = '¥0.00';
-    document.getElementById('targetFinalAmount').textContent = '¥0.00';
-    document.getElementById('targetInterestEarned').textContent = '¥0.00';
+    const requiredPrincipalEl = document.getElementById('requiredPrincipal');
+    if (requiredPrincipalEl) requiredPrincipalEl.textContent = '¥0.00';
     
     // 隐藏所有结果区域
-    document.getElementById('normal-results').style.display = 'none';
-    document.getElementById('target-results').style.display = 'none';
+    const normalResults = document.getElementById('normal-results');
+    const targetResults = document.getElementById('target-results');
+    if (normalResults) normalResults.style.display = 'none';
+    if (targetResults) targetResults.style.display = 'none';
 }
 
 // 目标金额计算函数
@@ -401,35 +395,22 @@ function calculateTarget() {
     const interestEarned = targetAmount - requiredPrincipal;
     
     // 显示结果
-    document.getElementById('results').style.display = 'block';
-    document.getElementById('result-title').innerHTML = '🎯 目标金额计算结果：<span id="requiredPrincipal">' + formatCurrency(requiredPrincipal) + '</span>';
-    document.getElementById('normal-results').style.display = 'none';
-    document.getElementById('target-results').style.display = 'block';
+    const resultsDiv = document.getElementById('target-results');
+    const resultTitle = document.getElementById('target-result-title');
+    const requiredPrincipalSpan = document.getElementById('requiredPrincipal');
     
-    document.getElementById('requiredPrincipal').textContent = formatCurrency(requiredPrincipal);
-    
-    // 显示详细分析
-    document.getElementById('target-summary').style.display = 'block';
-    document.getElementById('target-summary-rate').textContent = rate.toFixed(2) + '%';
-    document.getElementById('target-summary-time').textContent = time + ' 年';
-    
-    // 设置复利频率显示文本
-    const compoundText = document.getElementById('targetCompound').options[document.getElementById('targetCompound').selectedIndex].text;
-    document.getElementById('target-summary-compound').textContent = compoundText;
+    if (resultsDiv) {
+        resultsDiv.style.display = 'block';
+    }
+    if (resultTitle) {
+        resultTitle.innerHTML = '🎯 目标金额计算结果：<span id="requiredPrincipal">' + formatCurrency(requiredPrincipal) + '</span>';
+    }
+    if (requiredPrincipalSpan) {
+        requiredPrincipalSpan.textContent = formatCurrency(requiredPrincipal);
+    }
     
     // 滚动到结果区域
-    document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
-    
-    // 添加成功动画
-    const resultCards = document.querySelectorAll('#target-mode .result-card');
-    resultCards.forEach((card, index) => {
-        setTimeout(() => {
-            card.style.transform = 'scale(1.02)';
-            setTimeout(() => {
-                card.style.transform = 'scale(1)';
-            }, 200);
-        }, index * 100);
-    });
+    if (resultsDiv) resultsDiv.scrollIntoView({ behavior: 'smooth' });
 }
 
 // 为新输入框添加事件监听
