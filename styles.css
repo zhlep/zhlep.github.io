@@ -333,26 +333,33 @@ input[type="number"]:focus, select:focus {
 /* 目标模式的特殊样式 */
 #target-mode .results {
     background-color: #f8f9fa;
-    padding: 8px;
+    padding: 8px 12px;
     border-radius: 8px;
     border: 1px solid #e9ecef;
-    margin-top: 6px;
+    margin-top: 0;
+    transition: none;
+    display: inline-block; /* 使结果与按钮在同一行 */
+    width: auto; /* 自适应宽度 */
+    margin-left: 10px; /* 与按钮之间留一些间距 */
+    vertical-align: middle; /* 垂直居中对齐 */
+    flex: none; /* 不伸缩，保持内容大小 */
 }
 
 #target-mode .results h2 {
-    font-size: 18px;
+    font-size: 16px;
     color: #333;
-    margin-bottom: 4px;
+    margin: 0;
     text-align: center;
     font-weight: 700;
-    margin-top: 0;
+    display: flex;
+    align-items: center;
 }
 
 #target-mode .results h2 span {
-    font-size: 24px;
+    font-size: 18px;
     font-weight: 800;
     color: #28a745;
-    margin-left: 4px;
+    margin-left: 0; /* 移除左边距，因为我们只显示数值 */
 }
 
 .result-label {
@@ -559,12 +566,18 @@ input[type="number"], select {
     
     /* 手机端结果标题字体 */
     .results h2 {
-        font-size: 18px;
-        margin-bottom: 6px;
+        font-size: 14px; /* 与按钮字体大小一致 */
+        margin: 0;
+        display: flex;
+        align-items: center;
+        word-break: break-all; /* 确保文本换行 */
     }
     
     .results h2 span {
-        font-size: 22px;
+        font-size: 14px; /* 与按钮字体大小一致，避免分成多行 */
+        margin-left: 0; /* 移除左边距，因为我们只显示数值 */
+        word-break: break-word; /* 确保长数字换行 */
+        font-weight: 600; /* 保持重要性但减少字体大小 */
     }
     
     /* 确保计算器内容居中显示 */
@@ -692,12 +705,18 @@ input[type="number"], select {
     
     /* 480px以下结果标题字体 */
     .results h2 {
-        font-size: 18px;
-        margin-bottom: 6px;
+        font-size: 14px; /* 与按钮字体大小一致 */
+        margin: 0;
+        display: flex;
+        align-items: center;
+        word-break: break-all; /* 确保文本换行 */
     }
     
     .results h2 span {
-        font-size: 22px;
+        font-size: 14px; /* 与按钮字体大小一致，避免分成多行 */
+        margin-left: 0; /* 移除左边距，因为我们只显示数值 */
+        word-break: break-word; /* 确保长数字换行 */
+        font-weight: 600; /* 保持重要性但减少字体大小 */
     }
     
     /* 确保计算器内容居中显示 */
