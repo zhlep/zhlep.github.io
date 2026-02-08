@@ -222,7 +222,10 @@ input[type="number"]:focus, select:focus {
     display: flex;
     gap: 8px;
     margin-top: 8px;
+    margin-bottom: 6px; /* 添加底部边距，确保结果区域紧贴 */
     grid-column: 1 / -1;
+    align-items: center; /* 垂直居中对齐 */
+    flex-wrap: wrap; /* 允许换行 */
 }
 
 .calculate-btn, .clear-btn {
@@ -277,11 +280,33 @@ input[type="number"]:focus, select:focus {
 
 .results {
     background-color: #f8f9fa;
-    padding: 8px;
+    padding: 8px 12px;
     border-radius: 8px;
     border: 1px solid #e9ecef;
-    margin-top: 6px;
+    margin-top: 0;
     transition: none;
+    display: inline-block; /* 使结果与按钮在同一行 */
+    width: auto; /* 自适应宽度 */
+    margin-left: 10px; /* 与按钮之间留一些间距 */
+    vertical-align: middle; /* 垂直居中对齐 */
+    flex: none; /* 不伸缩，保持内容大小 */
+}
+
+.results h2 {
+    font-size: 16px;
+    color: #333;
+    margin: 0;
+    text-align: center;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+}
+
+.results h2 span {
+    font-size: 18px;
+    font-weight: 800;
+    color: #007bff;
+    margin-left: 4px;
 }
 
 .results h2 {
@@ -322,17 +347,28 @@ input[type="number"]:focus, select:focus {
 
 
 /* 目标模式的特殊样式 */
-#target-mode .result-row {
-    border-left: 2px solid #28a745;
-    background: linear-gradient(135deg, #f8fff9 0%, #ffffff 100%);
+#target-mode .results {
+    background-color: #f8f9fa;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+    margin-top: 6px;
 }
 
-#target-mode .result-label {
-    color: #28a745;
+#target-mode .results h2 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 4px;
+    text-align: center;
+    font-weight: 700;
+    margin-top: 0;
 }
 
-#target-mode .result-value {
+#target-mode .results h2 span {
+    font-size: 24px;
+    font-weight: 800;
     color: #28a745;
+    margin-left: 4px;
 }
 
 .result-label {
@@ -357,16 +393,21 @@ input[type="number"]:focus, select:focus {
 @media (max-width: 480px) {
     .results {
         padding: 6px;
-        margin-top: 4px;
+        margin-top: 0;
+        margin-left: 8px;
+        flex: none;
     }
     
     .results h2 {
         font-size: 16px;
-        margin-bottom: 3px;
+        margin: 0;
+        display: flex;
+        align-items: center;
     }
     
     .results h2 span {
-        font-size: 20px;
+        font-size: 18px;
+        margin-left: 4px;
     }
     
     .result-grid {
@@ -387,6 +428,15 @@ input[type="number"]:focus, select:focus {
         font-size: 8px;
         text-align: left;
         padding-right: 0;
+    }
+    
+    /* 确保按钮和结果在手机上正确显示 */
+    .button-group {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 8px;
     }
 }
 
@@ -471,11 +521,12 @@ input[type="number"], select {
         color: #dc3545;
     }
     
-    .button-group {
-        flex-direction: row;
-        gap: 10px;
-        margin-top: 10px;
-    }
+.button-group {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+    margin-bottom: 6px; /* 添加底部边距，确保结果区域紧贴 */
+}
     
     .calculate-btn, .clear-btn {
         font-size: 16px;
