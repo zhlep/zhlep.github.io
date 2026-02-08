@@ -54,8 +54,14 @@ function calculate() {
     
     document.getElementById('finalAmount').textContent = formatCurrency(finalAmount);
     
-    // 滚动到结果区域
-    document.getElementById('normal-results').scrollIntoView({ behavior: 'smooth' });
+    // 滚动到结果区域 - 仅在桌面设备上启用
+    if (window.innerWidth >= 768) { // 桌面设备
+        document.getElementById('normal-results').scrollIntoView({ behavior: 'smooth' });
+    } else { // 移动设备，防止滚动
+        // 保持当前滚动位置
+        const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+        window.scrollTo(0, scrollPosition);
+    }
 }
 
 function formatCurrency(amount) {
@@ -274,6 +280,16 @@ function adjustValue(inputId, step) {
                (inputId === 'targetRate' || inputId === 'targetTime')) {
         calculateTarget();
     }
+    
+    // 防止页面滚动，保持当前视图位置
+    if (window.innerWidth < 768) { // 移动设备检测
+        // 保存当前滚动位置
+        const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+        // 强制保持当前位置
+        setTimeout(() => {
+            window.scrollTo(0, scrollPosition);
+        }, 10); // 延迟一点时间确保浏览器已完成可能的滚动
+    }
 }
 
 // 为加减按钮添加触摸事件支持
@@ -409,8 +425,16 @@ function calculateTarget() {
         requiredPrincipalSpan.textContent = formatCurrency(requiredPrincipal);
     }
     
-    // 滚动到结果区域
-    if (resultsDiv) resultsDiv.scrollIntoView({ behavior: 'smooth' });
+    // 滚动到结果区域 - 仅在桌面设备上启用
+    if (resultsDiv) {
+        if (window.innerWidth >= 768) { // 桌面设备
+            resultsDiv.scrollIntoView({ behavior: 'smooth' });
+        } else { // 移动设备，防止滚动
+            // 保持当前滚动位置
+            const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+            window.scrollTo(0, scrollPosition);
+        }
+    }
 }
 
 // 为新输入框添加事件监听
@@ -464,4 +488,3 @@ function validateTargetInput(id, value) {
             break;
     }
 }
-
