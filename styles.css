@@ -385,7 +385,7 @@ input[type="number"]:focus, select:focus {
     }
     
     .results h2 {
-        font-size: 14px;
+        font-size: 14px; /* 与按钮字体大小一致 */
         margin: 0;
         display: flex;
         align-items: center;
@@ -393,9 +393,10 @@ input[type="number"]:focus, select:focus {
     }
     
     .results h2 span {
-        font-size: 16px;
+        font-size: 14px; /* 与按钮字体大小一致，避免分成多行 */
         margin-left: 2px;
         word-break: break-word; /* 确保长数字换行 */
+        font-weight: 600; /* 保持重要性但减少字体大小 */
     }
     
     .result-grid {
